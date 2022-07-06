@@ -2,7 +2,7 @@ import pandas as pd
 import os
 
 
-def Getenv():
+def mysqldata():
     source = {
         "host": "127.0.0.1",
         "user": "root",

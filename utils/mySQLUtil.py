@@ -8,14 +8,19 @@ import pymysql
 import logging
 
 logger = logging.getLogger(__name__)
+from config.source import mysqldata
 
+host = mysqldata().get("host")
+user = mysqldata().get("user")
+password = mysqldata().get("password")
+database = mysqldata().get("database")
 
 class MySQLUtil:
     def __init__(self):
-        self.host = "127.0.0.1"
-        self.user = "root"
-        self.password = "1234"
-        self.database = "information_live"
+        self.host = host
+        self.user = user
+        self.password = password
+        self.database = database
         try:
             self.conn = pymysql.connect(host=self.host, user=self.user, password=self.password, database=self.database)
             self.cursor = self.conn.cursor()
