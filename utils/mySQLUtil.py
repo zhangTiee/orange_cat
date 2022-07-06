@@ -26,16 +26,16 @@ class MySQLUtil:
             self.conn = pymysql.connect(host=self.host, user=self.user, password=self.password, database=self.database)
             self.cursor = self.conn.cursor()
         except Exception as e:
-            logger.exception("sql执行异常>>>")
+            logger.exception("-----------------数据库连接异常-----------------")
 
     def SqlSe(self, sql, param=None):
         try:
             self.cursor.execute(sql, param)
-            logger.info(sql)
+            logger.warning(f"执行sql----------------->  {sql}")
             result = self.cursor.fetchall()
             return result
         except Exception as e:
-            logger.exception("sql执行异常>>>")
+            logger.exception("-----------------sql执行异常-----------------")
         finally:
             self.cursor.close()
             self.conn.close()
@@ -44,15 +44,15 @@ class MySQLUtil:
         try:
             if param is None:
                 self.cursor.execute(sql)
-                logger.info(sql)
+                logger.warning(sql)
             else:
                 self.cursor.execute(sql, param)
-                logger.info(sql)
+                logger.warning(f"执行sql----------------->  {sql % param}")
             self.conn.commit()
             return True
         except Exception as e:
             self.conn.rollback()
-            logger.exception("sql执行异常>>>")
+            logger.exception("-----------------sql执行异常-----------------")
             return False
         finally:
             self.cursor.close()
@@ -61,12 +61,12 @@ class MySQLUtil:
     def SqlCommitMany(self, sql, param):
         try:
             self.cursor.executemany(sql, param)
-            logger.info(sql)
+            logger.warning(f"执行sql----------------->  {sql % param}")
             self.conn.commit()
             return True
         except Exception as e:
             self.conn.rollback()
-            logger.exception("sql执行异常>>>")
+            logger.exception("-----------------sql执行异常-----------------")
             return False
         finally:
             self.cursor.close()
@@ -76,11 +76,11 @@ class MySQLUtil:
         sql = f"describe {tablename}"
         try:
             self.cursor.execute(sql)
-            logger.info(sql)
+            logger.warning(f"执行sql----------------->  {sql}")
             columns = [result[0] for result in self.cursor.fetchall()]
             return columns
         except Exception as e:
-            logger.exception("sql执行异常>>>")
+            logger.exception("-----------------sql执行异常-----------------")
         finally:
             self.cursor.close()
             self.conn.close()
