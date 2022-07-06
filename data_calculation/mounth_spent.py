@@ -8,10 +8,12 @@ import datetime
 from utils.mySQLUtil import MySQLUtil
 
 
-def add_mounth_data():
-    month_list = []
-    month = datetime.datetime.now().strftime("%Y%m")
-    month_list.append(month)
+def add_mounth_data(month):
+    """
+    添加月度总结
+    :return:
+    """
+    month_list = [month]
     query_sql = f"""
     select sum(food),sum(transportation),sum(necessities),sum(rent),sum(clothes),sum(snack),sum(entertainment),sum(communication),sum(other) from daily_spend
     where date like '{month}%'"""
@@ -32,12 +34,17 @@ def add_mounth_data():
 
 
 def sel_mounth_data(month):
+    """
+    查询月度数据
+    :param month:
+    :return:
+    """
     query_sql = f"""
     select * from month_spend where month = %s
     """
-    add_mounth_data()
+    add_mounth_data(month)
     res_data = MySQLUtil().SqlSe(query_sql, month)
-    if res_data:
+    if res_data[0][1]:
         data_dic = {
             "date": res_data[0][0],
             "food": res_data[0][1],
@@ -51,8 +58,21 @@ def sel_mounth_data(month):
             "other": res_data[0][9],
         }
         data_dic["sum"] = sum(list(data_dic.values())[1:])
+        data_ratio = {
+            "food": round(res_data[0][1]/data_dic["sum"], 3),
+            "transportation": round(res_data[0][2]/data_dic["sum"], 3),
+            "necessities": round(res_data[0][3]/data_dic["sum"], 3),
+            "rent": round(res_data[0][4]/data_dic["sum"], 3),
+            "clothes": round(res_data[0][5]/data_dic["sum"], 3),
+            "snack": round(res_data[0][6]/data_dic["sum"], 3),
+            "entertainment": round(res_data[0][7]/data_dic["sum"], 3),
+            "communication": round(res_data[0][8]/data_dic["sum"], 3),
+            "other": round(res_data[0][9]/data_dic["sum"], 3),
+        }
     else:
         data_dic = {}
-    return data_dic
+        data_ratio = {}
+    data = {"month_data": data_dic, "data_ratio": data_ratio}
+    return data
 
 

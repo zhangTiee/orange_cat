@@ -15,6 +15,7 @@ user = mysqldata().get("user")
 password = mysqldata().get("password")
 database = mysqldata().get("database")
 
+
 class MySQLUtil:
     def __init__(self):
         self.host = host

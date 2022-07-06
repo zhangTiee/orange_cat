@@ -10,6 +10,10 @@ from utils.get_file_data import GetExcelData
 
 
 def daily_data():
+    """
+    导入每日数据
+    :return:
+    """
     data = GetExcelData()
     for data_ in data:
         data_list = list(data_.values())
@@ -17,6 +21,11 @@ def daily_data():
 
 
 def add_daily_spent(data_list):
+    """
+    新增每日记录
+    :param data_list:
+    :return:
+    """
     for i in range(0, len(data_list)):
         data_list[i] = 0.0 if not data_list[i] else data_list[i]
     add_sql = f"""
@@ -26,6 +35,11 @@ def add_daily_spent(data_list):
 
 
 def update_daily_spent(data_list):
+    """
+    更新每日记录
+    :param data_list:
+    :return:
+    """
     for i in range(0, len(data_list)):
         data_list[i] = 0.0 if not data_list[i] else data_list[i]
     upd_sql = f"""
@@ -38,6 +52,14 @@ def update_daily_spent(data_list):
 
 
 def sel_daily_spent(page, limit, start_date, end_date):
+    """
+    查询记录
+    :param page:
+    :param limit:
+    :param start_date:
+    :param end_date:
+    :return:
+    """
     page = (page - 1) * limit
     filter_sql = ""
     if start_date or end_date:
