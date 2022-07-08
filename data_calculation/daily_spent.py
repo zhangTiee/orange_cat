@@ -51,14 +51,21 @@ def update_daily_spent(data_list):
     :return:
     """
     for i in range(0, len(data_list)):
-        data_list[i] = 0.0 if not data_list[i] else data_list[i]
-    upd_sql = f"""
-    update daily_spend set food=%s,transportation=%s,necessities=%s,rent=%s,clothes=%s,snack=%s,entertainment=%s,communication=%s,soc_security=%s,other=%s 
-    where date = %s"""
-    date = data_list[0]
-    data_list = data_list[1:]
-    data_list.append(date)
-    MySQLUtil().SqlCommit(upd_sql, tuple(data_list))
+        data_list[i] = '0.0' if not data_list[i] else data_list[i]
+    data_info = {
+        "date": data_list[0],
+        "food": data_list[1],
+        "transportation": data_list[2],
+        "necessities": data_list[3],
+        "rent": data_list[4],
+        "clothes": data_list[5],
+        "snack": data_list[6],
+        "entertainment": data_list[7],
+        "communication": data_list[8],
+        "soc_security": data_list[9],
+        "other": data_list[10],
+    }
+    MySQLUtil().SqlUpdate("daily_spend", data_info, "date")
 
 
 def sel_daily_spent(page, limit, start_date, end_date):
