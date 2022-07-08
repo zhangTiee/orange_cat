@@ -71,23 +71,7 @@ def sel_daily_spent(page, limit, start_date, end_date):
     query_sql = f"""select * from daily_spend {filter_sql} order by date desc limit {page},{limit}"""
     query_count_sql = f"""select count(*) from daily_spend {filter_sql}"""
     res_data = MySQLUtil().SqlSe(query_sql)
-    count = MySQLUtil().SqlSe(query_count_sql)[0][0]
-    res_list = []
+    count = MySQLUtil().SqlSe(query_count_sql)[0]["count(*)"]
     for res_data_ in res_data:
-        res_dict = {
-            "date": res_data_[0],
-            "food": res_data_[1],
-            "transportation": res_data_[2],
-            "necessities": res_data_[3],
-            "rent": res_data_[4],
-            "clothes": res_data_[5],
-            "snack": res_data_[6],
-            "entertainment": res_data_[7],
-            "communication": res_data_[8],
-            "soc_security": res_data_[9],
-            "other": res_data_[10],
-            "id": res_data_[11],
-            "sum": sum(res_data_[1:-1]),
-        }
-        res_list.append(res_dict)
-    return count, res_list
+        res_data_["sum"] = sum(list(res_data_.values())[1:-1])
+    return count, res_data

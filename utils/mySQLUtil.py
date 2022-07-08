@@ -22,8 +22,9 @@ class MySQLUtil:
         self.user = user
         self.password = password
         self.database = database
+        self.cursorclass = pymysql.cursors.DictCursor
         try:
-            self.conn = pymysql.connect(host=self.host, user=self.user, password=self.password, database=self.database)
+            self.conn = pymysql.connect(host=self.host, user=self.user, password=self.password, database=self.database, cursorclass=self.cursorclass)
             self.cursor = self.conn.cursor()
         except Exception as e:
             logger.exception("-----------------数据库连接异常-----------------")
