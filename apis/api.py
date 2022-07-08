@@ -30,8 +30,9 @@ def add_data():
     snack = flask.request.values.get('snack')
     entertainment = flask.request.values.get('entertainment')
     communication = flask.request.values.get('communication')
+    soc_security = flask.request.values.get("soc_security")
     other = flask.request.values.get('other')
-    add_daily_spent([date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, other])
+    add_daily_spent([date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, soc_security,  other])
     return {"code": 0, "msg": "新增完成"}
 
 
@@ -47,8 +48,9 @@ def update_data():
     snack = flask.request.values.get('snack')
     entertainment = flask.request.values.get('entertainment')
     communication = flask.request.values.get('communication')
+    soc_security = flask.request.values.get("soc_security")
     other = flask.request.values.get('other')
-    update_daily_spent([date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, other])
+    update_daily_spent([date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, soc_security, other])
     return {"code": 0, "msg": "更新完成"}
 
 

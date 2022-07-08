@@ -15,19 +15,19 @@ def add_mounth_data(month):
     """
     month_list = [month]
     query_sql = f"""
-    select sum(food),sum(transportation),sum(necessities),sum(rent),sum(clothes),sum(snack),sum(entertainment),sum(communication),sum(other) from daily_spend
+    select sum(food),sum(transportation),sum(necessities),sum(rent),sum(clothes),sum(snack),sum(entertainment),sum(communication),sum(soc_security),sum(other) from daily_spend
     where date like '{month}%'"""
     month_list.extend(MySQLUtil().SqlSe(query_sql)[0])
     query_count_sql = f"""select count(*) from month_spend where month like '{month}%'"""
     count = MySQLUtil().SqlSe(query_count_sql)[0][0]
     if not count:
         ins_sql = f"""
-        insert into month_spend(month, food, transportation, necessities, rent, clothes, snack, entertainment, communication, other)
-        values (%s, %s, %s, %s, %s, %s, %s, %s, %s ,%s)"""
+        insert into month_spend(month, food, transportation, necessities, rent, clothes, snack, entertainment, communication, soc_security, other)
+        values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
         MySQLUtil().SqlCommit(ins_sql, tuple(month_list))
     else:
         upd_sql = f"""
-        update month_spend set food=%s,transportation=%s,necessities=%s,rent=%s,clothes=%s,snack=%s,entertainment=%s,communication=%s,other=%s
+        update month_spend set food=%s,transportation=%s,necessities=%s,rent=%s,clothes=%s,snack=%s,entertainment=%s,communication=%s,soc_security=%s,other=%s
         where month = {month}
         """
         MySQLUtil().SqlCommit(upd_sql, tuple(month_list[1:]))
@@ -55,7 +55,8 @@ def sel_mounth_data(month):
             "snack": res_data[0][6],
             "entertainment": res_data[0][7],
             "communication": res_data[0][8],
-            "other": res_data[0][9],
+            "soc_security": res_data[0][9],
+            "other": res_data[0][10],
         }
         data_dic["sum"] = sum(list(data_dic.values())[1:])
         data_ratio = {
@@ -67,7 +68,8 @@ def sel_mounth_data(month):
             "snack": round(res_data[0][6]/data_dic["sum"], 3),
             "entertainment": round(res_data[0][7]/data_dic["sum"], 3),
             "communication": round(res_data[0][8]/data_dic["sum"], 3),
-            "other": round(res_data[0][9]/data_dic["sum"], 3),
+            "soc_security": round(res_data[0][9] / data_dic["sum"], 3),
+            "other": round(res_data[0][10]/data_dic["sum"], 3),
         }
     else:
         data_dic = {}

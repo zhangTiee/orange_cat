@@ -29,8 +29,8 @@ def add_daily_spent(data_list):
     for i in range(0, len(data_list)):
         data_list[i] = 0.0 if not data_list[i] else data_list[i]
     add_sql = f"""
-    insert into daily_spend(date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, other)
-    values (%s, %s, %s, %s, %s, %s, %s, %s, %s ,%s)"""
+    insert into daily_spend(date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, soc_security, other)
+    values (%s, %s, %s, %s, %s, %s, %s, %s, %s ,%s, %s)"""
     MySQLUtil().SqlCommit(add_sql, tuple(data_list))
 
 
@@ -43,7 +43,7 @@ def update_daily_spent(data_list):
     for i in range(0, len(data_list)):
         data_list[i] = 0.0 if not data_list[i] else data_list[i]
     upd_sql = f"""
-    update daily_spend set food=%s,transportation=%s,necessities=%s,rent=%s,clothes=%s,snack=%s,entertainment=%s,communication=%s,other=%s 
+    update daily_spend set food=%s,transportation=%s,necessities=%s,rent=%s,clothes=%s,snack=%s,entertainment=%s,communication=%s,soc_security=%s,other=%s 
     where date = %s"""
     date = data_list[0]
     data_list = data_list[1:]
@@ -84,8 +84,9 @@ def sel_daily_spent(page, limit, start_date, end_date):
             "snack": res_data_[6],
             "entertainment": res_data_[7],
             "communication": res_data_[8],
-            "other": res_data_[9],
-            "id": res_data_[10],
+            "soc_security": res_data_[9],
+            "other": res_data_[10],
+            "id": res_data_[11],
             "sum": sum(res_data_[1:-1]),
         }
         res_list.append(res_dict)

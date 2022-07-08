@@ -27,6 +27,7 @@ def GetExcelData():
             "snack": data.loc[i, "snack"],
             "entertainment": data.loc[i, "entertainment"],
             "communication": data.loc[i, "communication"],
+            "soc_security": data.loc[i, "soc_security"],
             "other": data.loc[i, "other"],
 
         }
