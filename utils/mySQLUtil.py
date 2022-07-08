@@ -59,6 +59,24 @@ class MySQLUtil:
             self.cursor.close()
             self.conn.close()
 
+    def SqlInsert(self, table, params):
+        try:
+            key = ",".join(list(params.keys()))
+            val = ",".join(list(params.values()))
+            insert_sql = f"""
+            insert into {table}({key}) values({val})"""
+            logger.warning(f"执行sql----------------->  {insert_sql}")
+            self.cursor.execute(insert_sql)
+            self.conn.commit()
+            return True
+        except Exception as e:
+            self.conn.rollback()
+            logger.exception("-----------------sql执行异常-----------------")
+            return False
+        finally:
+            self.cursor.close()
+            self.conn.close()
+
     def SqlCommitMany(self, sql, param):
         try:
             self.cursor.executemany(sql, param)
