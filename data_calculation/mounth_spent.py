@@ -16,7 +16,8 @@ def add_mounth_data(month):
             select sum(food),sum(transportation),sum(necessities),sum(rent),sum(clothes),sum(snack),sum(entertainment),sum(communication),sum(soc_security),sum(other) from daily_spend
             where date like '{month}%'"""
     month_data = MySQLUtil().SqlSe(query_sql)[0]
-    query_count_sql = f"""select count(*) from month_spend where month like '{month}%'"""
+    query_count_sql = f"""
+            select count(*) from month_spend where month like '{month}%'"""
     count = MySQLUtil().SqlSe(query_count_sql)[0]["count(*)"]
     data_info = {
         "month": month,

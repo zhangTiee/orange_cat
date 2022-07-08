@@ -86,9 +86,9 @@ def sel_daily_spent(page, limit, start_date, end_date):
             end_date = 99991231
         filter_sql = f"""where date between {start_date} and {end_date} """
     query_sql = f"""
-                select * from daily_spend {filter_sql} order by date desc limit {page},{limit}"""
+            select * from daily_spend {filter_sql} order by date desc limit {page},{limit}"""
     query_count_sql = f"""
-                select count(*) from daily_spend {filter_sql}"""
+            select count(*) from daily_spend {filter_sql}"""
     res_data = MySQLUtil().SqlSe(query_sql)
     count = MySQLUtil().SqlSe(query_count_sql)[0]["count(*)"]
     for res_data_ in res_data:
