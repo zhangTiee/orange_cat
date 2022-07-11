@@ -13,7 +13,7 @@ def GetExcelData():
     获取数据源,扫描当前目录下后缀名为xlsx的文件
     :return:excel文件内容
     """
-    path = rf"""{os.getcwd()}\source\daily_spend.xlsx"""
+    path = rf"""{os.getcwd()}\data_calculation\source\daily_spend.xlsx"""
     data = pd.read_excel(path).fillna(0)
     data_list = []
     for i in range(0, len(data)):

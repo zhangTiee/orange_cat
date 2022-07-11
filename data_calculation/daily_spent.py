@@ -9,7 +9,7 @@ from utils.mySQLUtil import MySQLUtil
 from utils.get_file_data import GetExcelData
 
 
-def daily_data():
+def data_dr():
     """
     导入每日数据
     :return:
@@ -17,7 +17,7 @@ def daily_data():
     data = GetExcelData()
     for data_ in data:
         data_list = list(data_.values())
-        add_daily_spent(data_list)
+        # add_daily_spent(data_list)
 
 
 def add_daily_spent(data_list):

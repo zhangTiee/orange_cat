@@ -7,6 +7,7 @@
 from flask import Flask, request
 
 from data_calculation.daily_spent import (
+    data_dr,
     add_daily_spent,
     update_daily_spent,
     sel_daily_spent,
@@ -32,7 +33,9 @@ def add_data():
     communication = request.values.get('communication')
     soc_security = request.values.get("soc_security")
     other = request.values.get('other')
-    add_daily_spent([date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, soc_security,  other])
+    add_daily_spent(
+        [date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, soc_security,
+         other])
     return {"code": 0, "msg": "新增完成"}
 
 
@@ -50,7 +53,9 @@ def update_data():
     communication = request.values.get('communication')
     soc_security = request.values.get("soc_security")
     other = request.values.get('other')
-    update_daily_spent([date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, soc_security, other])
+    update_daily_spent(
+        [date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, soc_security,
+         other])
     return {"code": 0, "msg": "更新完成"}
 
 
@@ -71,6 +76,13 @@ def sel_month_data():
     month = request.values.get('month')
     res_data = sel_mounth_data(month)
     return {"code": 0, "msg": "查询成功", "data": res_data}
+
+
+# 数据导入
+@app.route('/daily_spent/data_import', methods=['GET'])
+def data_ipt():
+    data_dr()
+    return {"code": 0, "msg": "导入成功"}
 
 
 app.run()
