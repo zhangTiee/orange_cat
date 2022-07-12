@@ -79,9 +79,10 @@ def sel_month_data():
 
 
 # 数据导入
-@app.route('/daily_spent/data_import', methods=['GET'])
+@app.route('/daily_spent/data_import', methods=['POST'])
 def data_ipt():
-    data_dr()
+    file = request.files.get("file")
+    data_dr(file)
     return {"code": 0, "msg": "导入成功"}
 
 

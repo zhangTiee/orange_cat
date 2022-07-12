@@ -6,18 +6,21 @@
 import datetime
 
 from utils.mySQLUtil import MySQLUtil
-from utils.get_file_data import GetExcelData
+from utils.fileUtil import GetExcelData
+from utils.fileUtil import save_data, remove_file
 
 
-def data_dr():
+def data_dr(file):
     """
     导入每日数据
     :return:
     """
-    data = GetExcelData()
+    _, _, path = save_data(file)
+    data = GetExcelData(path)
     for data_ in data:
         data_list = list(data_.values())
-        # add_daily_spent(data_list)
+        add_daily_spent(data_list)
+    remove_file(path)
 
 
 def add_daily_spent(data_list):
