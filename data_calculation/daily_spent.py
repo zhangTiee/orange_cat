@@ -30,6 +30,7 @@ def add_daily_spent(data_list):
     :return:
     """
     for i in range(0, len(data_list)):
+        data_list[i] = str(data_list[i])
         data_list[i] = '0.0' if not data_list[i] else data_list[i]
     data_info = {
         "date": data_list[0],
