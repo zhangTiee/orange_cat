@@ -4,6 +4,9 @@
 # @Time    :2022/7/4 10:43
 # @Author  : zjl
 import datetime
+import os
+
+from pandas import DataFrame
 
 from utils.mySQLUtil import MySQLUtil
 from utils.fileUtil import GetExcelData
@@ -98,3 +101,22 @@ def sel_daily_spent(page, limit, start_date, end_date):
     for res_data_ in res_data:
         res_data_["sum"] = sum(list(res_data_.values())[1:-1])
     return count, res_data
+
+
+def data_dc():
+    """
+    数据导出
+    :return:
+    """
+    query_sql = f"""
+   select date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, soc_security, other from daily_spend order by date desc
+    """
+    res_data = MySQLUtil().SqlSe(query_sql)
+    data_list = []
+    for index, row in enumerate(res_data):
+        row_list = [index+1]
+        row_list.extend(list(row.values()))
+        data_list.append(row_list)
+    excel_data = DataFrame(columns=["序号", "日期", "餐饮", "交通", "生活用品", "房租水电", "衣服", "零食", "娱乐", "通讯", "社保", "其他"], data=data_list)
+    out_path = rf"{os.getcwd()}\tmp\file\{datetime.datetime.now().strftime('%Y%m%d')}\消费记录_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
+    excel_data.to_excel(out_path, sheet_name="消费记录", index=None)

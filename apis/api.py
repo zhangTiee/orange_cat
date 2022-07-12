@@ -11,6 +11,7 @@ from data_calculation.daily_spent import (
     add_daily_spent,
     update_daily_spent,
     sel_daily_spent,
+    data_dc,
 )
 from data_calculation.mounth_spent import (
     sel_mounth_data,
@@ -81,9 +82,15 @@ def sel_month_data():
 # 数据导入
 @app.route('/daily_spent/data_import', methods=['POST'])
 def data_ipt():
-    file = request.files.get("file")
-    data_dr(file)
+    data_dr(request.files.get("file"))
     return {"code": 0, "msg": "导入成功"}
+
+
+# 数据导出
+@app.route('/daily_spent/data_export', methods=['GET'])
+def data_ept():
+    data_dc()
+    return {"code": 0, "msg": "导出成功"}
 
 
 app.run()
