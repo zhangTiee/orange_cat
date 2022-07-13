@@ -67,5 +67,5 @@ def sel_mounth_data(month):
     else:
         data_dic = {}
         data_ratio = {}
-    data = {"month_data": data_dic, "data_ratio": data_ratio}
+    data = {"data_statistics": data_dic, "data_ratio": data_ratio}
     return data

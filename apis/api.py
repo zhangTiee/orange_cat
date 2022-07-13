@@ -23,64 +23,38 @@ app = Flask(__name__)
 # 日度新增
 @app.route("/daily_spent/add", methods=["POST"])
 def add_data():
-    date = request.values.get("date")
-    food = request.values.get("food")
-    transportation = request.values.get("transportation")
-    necessities = request.values.get("necessities")
-    rent = request.values.get("rent")
-    clothes = request.values.get("clothes")
-    snack = request.values.get("snack")
-    entertainment = request.values.get("entertainment")
-    communication = request.values.get("communication")
-    soc_security = request.values.get("soc_security")
-    other = request.values.get("other")
-    add_daily_spent(
-        [
-            date,
-            food,
-            transportation,
-            necessities,
-            rent,
-            clothes,
-            snack,
-            entertainment,
-            communication,
-            soc_security,
-            other,
-        ]
-    )
+    data = {"date": request.values.get("date"),
+            "food": request.values.get("food"),
+            "transportation": request.values.get("transportation"),
+            "necessities": request.values.get("necessities"),
+            "rent": request.values.get("rent"),
+            "clothes": request.values.get("clothes"),
+            "snack": request.values.get("snack", "0.0"),
+            "entertainment": request.values.get("entertainment"),
+            "communication": request.values.get("communication"),
+            "soc_security": request.values.get("soc_security"),
+            "other": request.values.get("other"),
+            }
+    add_daily_spent(data)
     return {"code": 0, "msg": "新增完成"}
 
 
 # 日度修改
 @app.route("/daily_spent/update", methods=["POST"])
 def update_data():
-    date = request.values.get("date")
-    food = request.values.get("food")
-    transportation = request.values.get("transportation")
-    necessities = request.values.get("necessities")
-    rent = request.values.get("rent")
-    clothes = request.values.get("clothes")
-    snack = request.values.get("snack")
-    entertainment = request.values.get("entertainment")
-    communication = request.values.get("communication")
-    soc_security = request.values.get("soc_security")
-    other = request.values.get("other")
-    update_daily_spent(
-        [
-            date,
-            food,
-            transportation,
-            necessities,
-            rent,
-            clothes,
-            snack,
-            entertainment,
-            communication,
-            soc_security,
-            other,
-        ]
-    )
+    data = {"date": request.values.get("date"),
+            "food": request.values.get("food"),
+            "transportation": request.values.get("transportation"),
+            "necessities": request.values.get("necessities"),
+            "rent": request.values.get("rent"),
+            "clothes": request.values.get("clothes"),
+            "snack": request.values.get("snack", "0.0"),
+            "entertainment": request.values.get("entertainment"),
+            "communication": request.values.get("communication"),
+            "soc_security": request.values.get("soc_security"),
+            "other": request.values.get("other"),
+            }
+    update_daily_spent(data)
     return {"code": 0, "msg": "更新完成"}
 
 
