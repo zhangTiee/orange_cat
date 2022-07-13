@@ -53,21 +53,19 @@ def sel_mounth_data(month):
         data_dic = res_data[0]
         data_dic["sum"] = sum(list(data_dic.values())[1:])
         data_ratio = {
-            "food": round(res_data[0]["food"]/data_dic["sum"], 3),
-            "transportation": round(res_data[0]["transportation"]/data_dic["sum"], 3),
-            "necessities": round(res_data[0]["necessities"]/data_dic["sum"], 3),
-            "rent": round(res_data[0]["rent"]/data_dic["sum"], 3),
-            "clothes": round(res_data[0]["clothes"]/data_dic["sum"], 3),
-            "snack": round(res_data[0]["snack"]/data_dic["sum"], 3),
-            "entertainment": round(res_data[0]["entertainment"]/data_dic["sum"], 3),
-            "communication": round(res_data[0]["communication"]/data_dic["sum"], 3),
+            "food": round(res_data[0]["food"] / data_dic["sum"], 3),
+            "transportation": round(res_data[0]["transportation"] / data_dic["sum"], 3),
+            "necessities": round(res_data[0]["necessities"] / data_dic["sum"], 3),
+            "rent": round(res_data[0]["rent"] / data_dic["sum"], 3),
+            "clothes": round(res_data[0]["clothes"] / data_dic["sum"], 3),
+            "snack": round(res_data[0]["snack"] / data_dic["sum"], 3),
+            "entertainment": round(res_data[0]["entertainment"] / data_dic["sum"], 3),
+            "communication": round(res_data[0]["communication"] / data_dic["sum"], 3),
             "soc_security": round(res_data[0]["soc_security"] / data_dic["sum"], 3),
-            "other": round(res_data[0]["other"]/data_dic["sum"], 3),
+            "other": round(res_data[0]["other"] / data_dic["sum"], 3),
         }
     else:
         data_dic = {}
         data_ratio = {}
     data = {"month_data": data_dic, "data_ratio": data_ratio}
     return data
-
-

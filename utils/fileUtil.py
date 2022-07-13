@@ -8,7 +8,7 @@ import pandas as pd
 import datetime
 from uuid import uuid4
 
-pd.set_option('display.max_columns', None)
+pd.set_option("display.max_columns", None)
 
 
 def GetExcelData(path):
@@ -31,7 +31,6 @@ def GetExcelData(path):
             "communication": data.loc[i, "通讯"],
             "soc_security": data.loc[i, "社保"],
             "other": data.loc[i, "其他"],
-
         }
         data_list.append(data_dic)
     return data_list

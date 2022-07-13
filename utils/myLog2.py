@@ -19,9 +19,12 @@ class MyLog:
         # 2.标准输出
         if len(logger.handlers) == 0:
             streamHandler = logging.StreamHandler()
-            fileHandler = logging.FileHandler(filename=filename, mode='a')
+            fileHandler = logging.FileHandler(filename=filename, mode="a")
             # 控制台及日志打印格式器
-            logformat = logging.Formatter(fmt="%(asctime)s - %(levelname)-6s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+            logformat = logging.Formatter(
+                fmt="%(asctime)s - %(levelname)-6s %(message)s",
+                datefmt="%Y-%m-%d %H:%M:%S",
+            )
             # 给处理器设置格式
             streamHandler.setFormatter(logformat)
             fileHandler.setFormatter(logformat)

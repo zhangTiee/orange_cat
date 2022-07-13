@@ -34,7 +34,7 @@ def add_daily_spent(data_list):
     """
     for i in range(0, len(data_list)):
         data_list[i] = str(data_list[i])
-        data_list[i] = '0.0' if not data_list[i] else data_list[i]
+        data_list[i] = "0.0" if not data_list[i] else data_list[i]
     data_info = {
         "date": data_list[0],
         "food": data_list[1],
@@ -58,7 +58,7 @@ def update_daily_spent(data_list):
     :return:
     """
     for i in range(0, len(data_list)):
-        data_list[i] = '0.0' if not data_list[i] else data_list[i]
+        data_list[i] = "0.0" if not data_list[i] else data_list[i]
     data_info = {
         "date": data_list[0],
         "food": data_list[1],
@@ -75,9 +75,11 @@ def update_daily_spent(data_list):
     MySQLUtil().SqlUpdate("daily_spend", data_info, "date")
 
 
-def sel_daily_spent(page, limit, start_date, end_date):
+def sel_daily_spent(page, limit, start_date, end_date, date, sort="desc"):
     """
     查询记录
+    :param date:
+    :param sort:
     :param page:
     :param limit:
     :param start_date:
@@ -86,16 +88,20 @@ def sel_daily_spent(page, limit, start_date, end_date):
     """
     page = (page - 1) * limit
     filter_sql = ""
+    if date:
+        filter_sql += f"""and date={date} """
     if start_date or end_date:
         if not start_date:
             start_date = 19491001
         if not end_date:
             end_date = 99991231
-        filter_sql = f"""where date between {start_date} and {end_date} """
+        filter_sql += f"""and date between {start_date} and {end_date} """
+    if sort:
+        filter_sql += f"""order by date {sort}"""
     query_sql = f"""
-            select * from daily_spend {filter_sql} order by date desc limit {page},{limit}"""
+            select * from daily_spend where 1=1 {filter_sql} limit {page},{limit}"""
     query_count_sql = f"""
-            select count(*) from daily_spend {filter_sql}"""
+            select count(*) from daily_spend where 1=1 {filter_sql}"""
     res_data = MySQLUtil().SqlSe(query_sql)
     count = MySQLUtil().SqlSe(query_count_sql)[0]["count(*)"]
     for res_data_ in res_data:
@@ -114,13 +120,31 @@ def data_dc():
     res_data = MySQLUtil().SqlSe(query_sql)
     data_list = []
     for index, row in enumerate(res_data):
-        row_list = [index+1]
+        row_list = [index + 1]
         row_list.extend(list(row.values()))
         data_list.append(row_list)
-    excel_data = DataFrame(columns=["序号", "日期", "餐饮", "交通", "生活用品", "房租水电", "衣服", "零食", "娱乐", "通讯", "社保", "其他"], data=data_list)
+    excel_data = DataFrame(
+        columns=[
+            "序号",
+            "日期",
+            "餐饮",
+            "交通",
+            "生活用品",
+            "房租水电",
+            "衣服",
+            "零食",
+            "娱乐",
+            "通讯",
+            "社保",
+            "其他",
+        ],
+        data=data_list,
+    )
     filepath = rf"{os.getcwd()}\tmp\file\{datetime.datetime.now().strftime('%Y%m%d')}"
     if not os.path.exists(filepath):
         os.mkdir(filepath)
-    out_path = rf"{filepath}\消费记录_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
+    out_path = (
+        rf"{filepath}\消费记录_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
+    )
     excel_data.to_excel(out_path, sheet_name="消费记录", index=None)
     return out_path
