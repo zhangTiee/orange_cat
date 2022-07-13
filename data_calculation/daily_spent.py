@@ -118,6 +118,9 @@ def data_dc():
         row_list.extend(list(row.values()))
         data_list.append(row_list)
     excel_data = DataFrame(columns=["序号", "日期", "餐饮", "交通", "生活用品", "房租水电", "衣服", "零食", "娱乐", "通讯", "社保", "其他"], data=data_list)
-    out_path = rf"{os.getcwd()}\tmp\file\{datetime.datetime.now().strftime('%Y%m%d')}\消费记录_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
+    filepath = rf"{os.getcwd()}\tmp\file\{datetime.datetime.now().strftime('%Y%m%d')}"
+    if not os.path.exists(filepath):
+        os.mkdir(filepath)
+    out_path = rf"{filepath}\消费记录_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
     excel_data.to_excel(out_path, sheet_name="消费记录", index=None)
     return out_path
