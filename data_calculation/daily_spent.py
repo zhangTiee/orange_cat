@@ -28,7 +28,7 @@ def data_dr(file):
 
 def import_daily_spent(data_list):
     """
-    新增每日记录
+    导入每日记录
     :param data_list:
     :return:
     """
@@ -46,7 +46,8 @@ def import_daily_spent(data_list):
         "entertainment": data_list[7],
         "communication": data_list[8],
         "soc_security": data_list[9],
-        "other": data_list[10],
+        "beauty_salons": data_list[10],
+        "other": data_list[11],
     }
     MySQLUtil().SqlInsert("daily_spend", data_info)
 

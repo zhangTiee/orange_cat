@@ -33,6 +33,7 @@ def add_data():
             "entertainment": request.values.get("entertainment"),
             "communication": request.values.get("communication"),
             "soc_security": request.values.get("soc_security"),
+            "beauty_salons": request.values.get("beauty_salons"),
             "other": request.values.get("other"),
             }
     add_daily_spent(data)
@@ -48,10 +49,11 @@ def update_data():
             "necessities": request.values.get("necessities"),
             "rent": request.values.get("rent"),
             "clothes": request.values.get("clothes"),
-            "snack": request.values.get("snack", "0.0"),
+            "snack": request.values.get("snack"),
             "entertainment": request.values.get("entertainment"),
             "communication": request.values.get("communication"),
             "soc_security": request.values.get("soc_security"),
+            "beauty_salons": request.values.get("beauty_salons"),
             "other": request.values.get("other"),
             }
     update_daily_spent(data)
