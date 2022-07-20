@@ -8,6 +8,7 @@ import pymysql
 import logging
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
 from config.source import mysqldata
 
 host = mysqldata().get("host")
@@ -37,12 +38,12 @@ class MySQLUtil:
 
     def SqlSe(self, sql, param=None):
         try:
-            logger.warning(f"执行sql----------------->  {sql}")
+            logger.info(f"执行sql----------------->  {sql}")
             self.cursor.execute(sql, param)
             result = self.cursor.fetchall()
             return result
         except Exception as e:
-            logger.exception("-----------------sql执行异常-----------------")
+            logger.error("-----------------sql执行异常-----------------")
         finally:
             self.cursor.close()
             self.conn.close()
@@ -53,13 +54,13 @@ class MySQLUtil:
                 self.cursor.execute(sql)
                 logger.warning(sql)
             else:
-                logger.warning(f"执行sql----------------->  {sql % param}")
+                logger.info(f"执行sql----------------->  {sql % param}")
                 self.cursor.execute(sql, param)
             self.conn.commit()
             return True
         except Exception as e:
             self.conn.rollback()
-            logger.exception("-----------------sql执行异常-----------------")
+            logger.error("-----------------sql执行异常-----------------")
             return False
         finally:
             self.cursor.close()
@@ -71,13 +72,13 @@ class MySQLUtil:
             val = ",".join(list(params.values()))
             insert_sql = f"""
             insert into {table}({key}) values({val})"""
-            logger.warning(f"执行sql----------------->  {insert_sql}")
+            logger.info(f"执行sql----------------->  {insert_sql}")
             self.cursor.execute(insert_sql)
             self.conn.commit()
             return True
         except Exception as e:
             self.conn.rollback()
-            logger.exception("-----------------sql执行异常-----------------")
+            logger.error("-----------------sql执行异常-----------------")
             return False
         finally:
             self.cursor.close()
@@ -92,13 +93,13 @@ class MySQLUtil:
                 set_sql += f"{k}={v},"
             update_sql = f"""
             update {table} {set_sql[:-1]} {where_sql}"""
-            logger.warning(f"执行sql----------------->  {update_sql}")
+            logger.info(f"执行sql----------------->  {update_sql}")
             self.cursor.execute(update_sql)
             self.conn.commit()
             return True
         except Exception as e:
             self.conn.rollback()
-            logger.exception("-----------------sql执行异常-----------------")
+            logger.error("-----------------sql执行异常-----------------")
             return False
         finally:
             self.cursor.close()
@@ -106,13 +107,13 @@ class MySQLUtil:
 
     def SqlCommitMany(self, sql, param):
         try:
-            logger.warning(f"执行sql----------------->  {sql % param}")
+            logger.info(f"执行sql----------------->  {sql % param}")
             self.cursor.executemany(sql, param)
             self.conn.commit()
             return True
         except Exception as e:
             self.conn.rollback()
-            logger.exception("-----------------sql执行异常-----------------")
+            logger.error("-----------------sql执行异常-----------------")
             return False
         finally:
             self.cursor.close()
@@ -121,12 +122,12 @@ class MySQLUtil:
     def GetColumns(self, tablename):
         sql = f"describe {tablename}"
         try:
-            logger.warning(f"执行sql----------------->  {sql}")
+            logger.info(f"执行sql----------------->  {sql}")
             self.cursor.execute(sql)
             columns = [result[0] for result in self.cursor.fetchall()]
             return columns
         except Exception as e:
-            logger.exception("-----------------sql执行异常-----------------")
+            logger.error("-----------------sql执行异常-----------------")
         finally:
             self.cursor.close()
             self.conn.close()
