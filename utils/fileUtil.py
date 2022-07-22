@@ -31,6 +31,7 @@ def GetExcelData(path):
             "communication": data.loc[i, "通讯"],
             "soc_security": data.loc[i, "社保"],
             "beauty_salons": data.loc[i, "美容美发"],
+            "electronic_product": data.loc[i, "电子产品"],
             "other": data.loc[i, "其他"],
         }
         data_list.append(data_dic)

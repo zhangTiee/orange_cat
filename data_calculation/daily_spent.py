@@ -47,7 +47,8 @@ def import_daily_spent(data_list):
         "communication": data_list[8],
         "soc_security": data_list[9],
         "beauty_salons": data_list[10],
-        "other": data_list[11],
+        "electronic_product": data_list[11],
+        "other": data_list[12],
     }
     MySQLUtil().SqlInsert("daily_spend", data_info)
 
@@ -116,7 +117,7 @@ def data_dc():
     :return:
     """
     query_sql = f"""
-   select date,food,transportation,necessities,rent,clothes,snack,entertainment,communication,soc_security,beauty_salons,other from daily_spend order by date desc
+   select date,food,transportation,necessities,rent,clothes,snack,entertainment,communication,soc_security,beauty_salons,electronic_product,other from daily_spend order by date desc
     """
     res_data = MySQLUtil().SqlSe(query_sql)
     data_list = []
@@ -138,6 +139,7 @@ def data_dc():
             "通讯",
             "社保",
             "美容美发",
+            "电子产品",
             "其他",
         ],
         data=data_list,

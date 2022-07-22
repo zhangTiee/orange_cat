@@ -13,7 +13,8 @@ def add_mounth_data(month):
     :return:
     """
     query_sql = f"""
-            select sum(food),sum(transportation),sum(necessities),sum(rent),sum(clothes),sum(snack),sum(entertainment),sum(communication),sum(soc_security),sum(beauty_salons),sum(other) from daily_spend
+            select sum(food),sum(transportation),sum(necessities),sum(rent),sum(clothes),sum(snack),sum(entertainment),
+            sum(communication),sum(soc_security),sum(beauty_salons),sum(electronic_product),sum(other) from daily_spend
             where date like '{month}%'"""
     month_data = MySQLUtil().SqlSe(query_sql)[0]
     query_count_sql = f"""
@@ -31,6 +32,7 @@ def add_mounth_data(month):
         "communication": month_data["sum(communication)"],
         "soc_security": month_data["sum(soc_security)"],
         "beauty_salons": month_data["sum(beauty_salons)"],
+        "electronic_product": month_data["sum(electronic_product)"],
         "other": month_data["sum(other)"],
     }
     if not count:
@@ -64,6 +66,7 @@ def sel_mounth_data(month):
             "communication": round(res_data[0]["communication"] / data_dic["sum"], 3),
             "soc_security": round(res_data[0]["soc_security"] / data_dic["sum"], 3),
             "beauty_salons": round(res_data[0]["beauty_salons"] / data_dic["sum"], 3),
+            "electronic_product": round(res_data[0]["electronic_product"] / data_dic["sum"], 3),
             "other": round(res_data[0]["other"] / data_dic["sum"], 3),
         }
     else:

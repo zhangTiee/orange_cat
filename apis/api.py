@@ -33,6 +33,7 @@ def add_data():
             "entertainment": request.values.get("entertainment"),
             "communication": request.values.get("communication"),
             "soc_security": request.values.get("soc_security"),
+            "electronic_product": request.values.get("electronic_product"),
             "beauty_salons": request.values.get("beauty_salons"),
             "other": request.values.get("other"),
             }
@@ -54,6 +55,7 @@ def update_data():
             "communication": request.values.get("communication"),
             "soc_security": request.values.get("soc_security"),
             "beauty_salons": request.values.get("beauty_salons"),
+            "electronic_product": request.values.get("electronic_product"),
             "other": request.values.get("other"),
             }
     update_daily_spent(data)
