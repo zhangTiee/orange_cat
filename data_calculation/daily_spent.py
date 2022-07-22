@@ -116,7 +116,7 @@ def data_dc():
     :return:
     """
     query_sql = f"""
-   select date, food, transportation, necessities, rent, clothes, snack, entertainment, communication, soc_security, other from daily_spend order by date desc
+   select date,food,transportation,necessities,rent,clothes,snack,entertainment,communication,soc_security,beauty_salons,other from daily_spend order by date desc
     """
     res_data = MySQLUtil().SqlSe(query_sql)
     data_list = []
@@ -137,6 +137,7 @@ def data_dc():
             "娱乐",
             "通讯",
             "社保",
+            "美容美发",
             "其他",
         ],
         data=data_list,
